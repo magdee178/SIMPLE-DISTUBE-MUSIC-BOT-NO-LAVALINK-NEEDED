@@ -1,0 +1,33 @@
+{
+  "name": "DisSpaceX",
+  "version": "33.0.0",
+  "description": "✈ Join Discord: https://discord.gg/efmhM5cgSh",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "TEC",
+  "license": "MIT",
+  "dependencies": {
+    "@discordjs/voice": "^0.7.5",
+    "@distube/soundcloud": "^1.3.3",
+    "@distube/spotify": "^1.2.1",
+    "@distube/ytdl-core": "^4.13.3",
+    "@distube/ytsr": "^2.0.0",
+    "chalk": "^4.1.2",
+    "common-tags": "^1.8.2",
+    "delay": "^5.0.0",
+    "discord.js": "^13.6.0",
+    "distube": "^3.3.4",
+    "dotenv": "^14.3.2",
+    "express": "^4.19.2",
+    "ffmpeg-static": "^4.4.1",
+    "figlet": "^1.5.2",
+    "libsodium-wrappers": "^0.7.9",
+    "lyrics-finder": "^21.7.0",
+    "opusscript": "^0.0.8"
+  },
+  "devDependencies": {
+    "node": "^17.0.1"
+  }
+}
