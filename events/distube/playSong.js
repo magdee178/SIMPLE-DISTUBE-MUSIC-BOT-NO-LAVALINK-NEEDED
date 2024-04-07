@@ -120,7 +120,7 @@ module.exports = async (client, queue, track) => {
   function disspace(nowQueue, nowTrack) {
     const embeded = new MessageEmbed()
     .setAuthor({ name: `| Starting Playing...`, iconURL: 'https://images-ext-1.discordapp.net/external/qDlRzYzN4IgibHWG3GABUg7OiCMnIAnd9-W6PvxJp0g/%3Fsize%3D512/https/cdn.discordapp.com/icons/1063452003910553731/48dc9061e34fc318b2c2e5c0e89bca05.webp?format=webp&width=320&height=320'})
-    .setThumbnail(nowTrack.thumbnail)
+    .setImage(nowTrack.thumbnail)
     .setColor('#2f3136')
     .setDescription(`**[${nowTrack.name}](${nowTrack.url})**`)
     .addField(`Uploader:`, `**[${nowTrack.uploader.name}](${nowTrack.uploader.url})**`, true)
