@@ -9,7 +9,7 @@ module.exports = async (client, queue, track) => {
       const filter = (message) => {
         if(message.guild.me.voice.channel && message.guild.me.voice.channelId === message.member.voice.channelId) return true;
         else {
-          message.reply({ content: "You need to be in a same/voice channel.", ephemeral: true });
+          message.reply({ content: "يجب أن تكون في نفس القناة/القناة الصوتية.", ephemeral: true });
         }
       };
       const collector = nowplay.createMessageComponentCollector({ filter, time: 120000 });
@@ -25,14 +25,14 @@ module.exports = async (client, queue, track) => {
           await client.distube.resume(message.guild.id);
           const embed = new MessageEmbed()
             .setColor("#2f3136")
-            .setDescription(`\`⏯\` | **Song has been:** \`Resumed\``);
+            .setDescription(`\`⏯\` | **الأغنية الأن:** \`تم استئنافها\``);
     
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
           await client.distube.pause(message.guild.id);
           const embed = new MessageEmbed()
             .setColor("#2f3136")
-            .setDescription(`\`⏯\` | **Song has been:** \`Paused\``);
+            .setDescription(`\`⏯\` | **الأغنية الأن:** \`تم إيقافها مؤقتاً\``);
     
           message.reply({ embeds: [embed], ephemeral: true });
         }
@@ -43,7 +43,7 @@ module.exports = async (client, queue, track) => {
           if (queue.songs.length === 1) {
             const embed = new MessageEmbed()
                 .setColor("#2f3136")
-                .setDescription("\`🚨\` | **There are no** `Songs` **in queue**")
+                .setDescription("\`🚨\` | **لا توجد ** `أغاني` **في قائمة الانتظار**")
 
             message.reply({ embeds: [embed], ephemeral: true });
           } else {
@@ -51,7 +51,7 @@ module.exports = async (client, queue, track) => {
             .then(song => {
                 const embed = new MessageEmbed()
                     .setColor("#2f3136")
-                    .setDescription("\`⏭\` | **Song has been:** `Skipped`")
+                    .setDescription("\`⏭\` | **الأغنية الأن:** `تم التخطي`")
 
             nowplay.edit({ components: [] });
             message.reply({ embeds: [embed], ephemeral: true });
@@ -65,30 +65,20 @@ module.exports = async (client, queue, track) => {
           await client.distube.stop(message.guild.id);
   
           const embed = new MessageEmbed()
-              .setDescription(`\`🚫\` | **Song has been:** | \`Stopped\``)
+              .setDescription(`\`🚫\` | **الأغنية الأن** | \`تم إيقافها\``)
               .setColor('#2f3136');
           
           await nowplay.edit({ components: [] });
           message.reply({ embeds: [embed], ephemeral: true });
-        } else if(id === "loop") {
+        } else if(id === "about") {
           if(!queue) {
             collector.stop();
           }
-          if (queue.repeatMode === 0) {
-            client.distube.setRepeatMode(message.guild.id, 1);
             const embed = new MessageEmbed()
-                .setColor("#2f3136")
-                .setDescription(`\`🔁\` | **Song is loop:** \`Current\``)
+                .setColor("#ff0000")
+                .setDescription(`**للتواصل مع المطور:** __[اضغط هنا](https://discord.com/users/1150890847768936458)__\n**سيرفر الدعم الفني:** __[SOON](https://twitch.tv/4egy)__\n\n> استعمل الأمر: \`${client.prefix}about\` لترى المعلومات كاملة.`)
 
             message.reply({ embeds: [embed], ephemeral: true });
-          } else {
-            client.distube.setRepeatMode(message.guild.id, 0);
-            const embed = new MessageEmbed()
-                .setColor("#2f3136")
-                .setDescription(`\`🔁\` | **Song is unloop:** \`Current\``)
-
-            message.reply({ embeds: [embed], ephemeral: true });
-          }
         } else if (id === "previous") {
           if(!queue) {
             collector.stop();
@@ -96,14 +86,14 @@ module.exports = async (client, queue, track) => {
           if (queue.previousSongs.length == 0) {
             const embed = new MessageEmbed()
                 .setColor("#2f3136")
-                .setDescription("\`🚨\` | **There are no** `Previous` **songs**")
+                .setDescription("\`🚨\` | **لا توجد ** `سابقة` **أغاني**")
 
             message.reply({ embeds: [embed], ephemeral: true });
           } else {
           await client.distube.previous(message)
                 const embed = new MessageEmbed()
                     .setColor("#2f3136")
-                    .setDescription("\`⏮\` | **Song has been:** `Previous`")
+                    .setDescription("\`⏮\` | **الأغنية الأن:** `السابقة`")
 
                 nowplay.edit({ components: [] });
                 message.reply({ embeds: [embed], ephemeral: true });
@@ -117,49 +107,64 @@ module.exports = async (client, queue, track) => {
       });
   }
 
-  function disspace(nowQueue, nowTrack) {
-    const embeded = new MessageEmbed()
-    .setAuthor({ name: `| Starting Playing...`, iconURL: 'https://images-ext-1.discordapp.net/external/qDlRzYzN4IgibHWG3GABUg7OiCMnIAnd9-W6PvxJp0g/%3Fsize%3D512/https/cdn.discordapp.com/icons/1063452003910553731/48dc9061e34fc318b2c2e5c0e89bca05.webp?format=webp&width=320&height=320'})
-    .setImage(nowTrack.thumbnail)
-    .setColor('#2f3136')
-    .setDescription(`**[${nowTrack.name}](${nowTrack.url})**`)
-    .addField(`Uploader:`, `**[${nowTrack.uploader.name}](${nowTrack.uploader.url})**`, true)
-    .addField(`Requester:`, `${nowTrack.user}`, true)
-    .addField(`Total Duration:`, `${nowQueue.formattedDuration}`, true)
+  function disspace(nowQueue, nowTrack, client, PREFIX) {
     
+    const embeded = new MessageEmbed()
+    .setAuthor({ name: `🎵 | Starting Playing...`})
+    //.setImage(nowTrack.thumbnail)
+      .setThumbnail('https://cdn.discordapp.com/attachments/1220651731503812649/1227138378298949632/Picsart_24-03-20_06-09-39-451.png?ex=662750ac&is=6614dbac&hm=5352ade1cdc45df29bfa15ed5ce9050774b7ddcbdff19e8450bf736c0aab84da&')
+    .setColor('#2f3136')
+    .setDescription(`__أسم الأغنية:__\n**[${nowTrack.name}](${nowTrack.url})**`)
+    //.addField(`Uploader:`, `**[${nowTrack.uploader.name}](${nowTrack.uploader.url})**`, true)
+    .addField(`__تم الطلب من:__`, `${nowTrack.user}`, true)
+    .addField(`__مدة الأغنية:__`, `${nowQueue.formattedDuration}`, true)
     .setTimestamp()
 
     const row = new MessageActionRow()
+        
+   //     message.channel.send({ embeds: [embed], components: [row] })
     .addComponents(
       new MessageButton()
         .setCustomId("pause")
+        .setLabel("إيقاف مؤقت")
         .setEmoji("⏯")
         .setStyle("SUCCESS")
     )
     .addComponents(
       new MessageButton()
         .setCustomId("previous")
+        .setLabel("السابق")
         .setEmoji("⬅")
         .setStyle("PRIMARY")
     )
     .addComponents(
       new MessageButton()
         .setCustomId("stop")
+        .setLabel("إيقاف التشغيل")
         .setEmoji("✖")
         .setStyle("DANGER")
     )
     .addComponents(
       new MessageButton()
         .setCustomId("skip")
+        .setLabel("تخطي")
         .setEmoji("➡")
         .setStyle("PRIMARY")
     )
-    .addComponents(
+   /* .addComponents(
       new MessageButton()
         .setCustomId("loop")
+        .setLabel("وضع التكرار")
         .setEmoji("🔄")
         .setStyle("SUCCESS")
-    )
+    ) */
+    .addComponents(
+                new MessageButton()
+                    .setLabel("Developer")
+                    .setCustomId(`about`)
+                    .setEmoji("❕")
+                    .setStyle("SECONDARY")
+            )
     return {
       embeds: [embeded],
       components: [row]
