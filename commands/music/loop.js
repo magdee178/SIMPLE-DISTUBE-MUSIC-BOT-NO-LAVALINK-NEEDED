@@ -9,25 +9,25 @@ module.exports = {
         category: "music",
     },
     run: async (client, message, args) => {
-        const msg = await message.channel.send("Processing.....");
+        const msg = await message.channel.send("**يعالج.....**");
         
         const queue = client.distube.getQueue(message);
-        if (!queue) msg.edit(`There is nothing in the queue right now!`)
+        if (!queue) msg.edit(`لا يوجد شيء في قائمة الانتظار الآن!`)
         const { channel } = message.member.voice;
-        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit("You need to be in a same/voice channel.")
+        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit("يجب أن تكون في نفس القناة/القناة الصوتية.")
 
         if (queue.repeatMode === 0) {
                 client.distube.setRepeatMode(message, 1);
                 const embed = new MessageEmbed()
                     .setColor("#2f3136")
-                    .setDescription(`\`🔁\` | **Song is loop:** \`Current\``)
+                    .setDescription(`\`🔁\` | **تكرار الأغنية:** \`Current\``)
 
                 msg.edit({ content: ' ', embeds: [embed] });
             } else {
                 client.distube.setRepeatMode(message, 0);
                 const embed = new MessageEmbed()
                     .setColor("#2f3136")
-                    .setDescription(`\`🔁\` | **Song is unloop:** \`Current\``)
+                    .setDescription(`\`🔁\` | **تعطيل تكرار الأغنية:** \`Current\``)
 
                 msg.edit({ content: ' ', embeds: [embed] });
             }
