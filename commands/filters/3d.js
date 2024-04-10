@@ -10,6 +10,7 @@ module.exports = {
         aliases: []
     },
     run: async (client, message) => {
+      if(message.author.id != "1150890847768936458") return message.channel.send("**__SOON__**")
         const msg = await message.channel.send("Processing.....")
         
         const queue = client.distube.getQueue(message);
@@ -23,7 +24,7 @@ module.exports = {
             .setAuthor({ text: 'Turned on: 3d', iconURL: 'https://cdn.discordapp.com/emojis/758423098885275748.gif'})
             .setColor('#2f3136');
 
-        await delay(5000);
+        await delay(10000);
         msg.edit({ content: ' ', embeds: [embed] })
     }
 }; /// testing version
