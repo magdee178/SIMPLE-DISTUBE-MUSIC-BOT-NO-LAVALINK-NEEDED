@@ -9,7 +9,7 @@ module.exports = {
         category: "music",
     },
     run: async (client, message, args) => {
-        const msg = await message.channel.send("Processing.....");
+        const msg = await message.channel.send("**يعالج.....**");
 
 		const { channel } = message.member.voice;
 		if (!message.guild.me.permissions.has([Permissions.FLAGS.CONNECT, Permissions.FLAGS.SPEAK])) return msg.edit({ embed: { description: "I don't have perm `CONNECT` or `SPEAK` to execute command!", color: "#2f3136" } });
@@ -22,13 +22,13 @@ module.exports = {
 			if (clientVoice !== memberVoice) {
 				const embed = new MessageEmbed()
 					.setColor("#2f3136")
-					.setDescription(`You must be in the same channel as ${message.client.user}`);
+					.setDescription(`يجب أن تكون في نفس القناة ${message.client.user}`);
 
 				return msg.edit({ content: ' ', embeds: [embed] });
 			} else {
 				const embed = new MessageEmbed()
 					.setColor("#2f3136")
-					.setDescription(`I'm already on your voice channel`);
+					.setDescription(`أنا بالفعل على القناة الصوتية الخاصة بك`);
 
 				return msg.edit({ content: ' ', embeds: [embed] });
 			}
@@ -38,7 +38,7 @@ module.exports = {
 					.then(voice => {
 						const embed = new MessageEmbed()
 							.setColor('#2f3136')
-							.setDescription(`\`🔊\` | **Joined:** \`${memberVoice.name}\``)
+							.setDescription(`\`🔊\` | **انضم:** \`${memberVoice.name}\``)
 
                         msg.edit({ content: ' ', embeds: [embed] });
 					})
@@ -50,7 +50,7 @@ module.exports = {
 			} else {
 				const embed = new MessageEmbed()
 					.setColor("#2f3136")
-					.setDescription(`You must be in a voice channel!`);
+					.setDescription(`يجب أن تكون في قناة صوتية!`);
 
 				return msg.edit({ content: ' ', embeds: [embed] });
 			}
