@@ -13,5 +13,5 @@ module.exports = async (client, message) => {
         };
       ["client", "guild"].forEach(x => load(x));
       await delay(4000);
-      console.log(chalk.greenBright(`TEC | [INFORMATION] Global Events Loaded`));
+     // console.log(chalk.greenBright(`TEC | [INFORMATION] Global Events Loaded`));
 };
