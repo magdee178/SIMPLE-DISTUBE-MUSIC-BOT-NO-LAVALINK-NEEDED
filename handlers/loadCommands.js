@@ -13,5 +13,5 @@ module.exports = async (client) => {
         };
         ["music", "filters", "utilities"].forEach(x => load(x));
         await delay(4000);
-        console.log(chalk.greenBright(`TEC | [INFORMATION] Command Events Loaded`));
+       // console.log(chalk.greenBright(`TEC | [INFORMATION] Command Events Loaded`));
 };
