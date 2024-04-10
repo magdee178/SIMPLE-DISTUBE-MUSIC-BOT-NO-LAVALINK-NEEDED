@@ -13,5 +13,5 @@ module.exports = async (client) => {
         console.log(e);
     }
     await delay(4000);
-    console.log(chalk.greenBright(`TEC | [INFORMATION] Distube Events Loaded`));
+   // console.log(chalk.greenBright(`TEC | [INFORMATION] Distube Events Loaded`));
 };
