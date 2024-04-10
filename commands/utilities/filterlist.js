@@ -10,7 +10,8 @@ module.exports = {
         accessableby: "Members"
     },
     run: async (client, message) => {
-        const msg = await message.channel.send("Processing...");
+      if(message.author.id != "1150890847768936458") return message.channel.send("**__SOON__**")
+        const msg = await message.channel.send("**يعالج...**");
         const embed = new MessageEmbed()
             .setColor('#2f3136')
             .setAuthor({ name: `Filter List`, iconURL: message.guild.iconURL({ dynamic: true })})
