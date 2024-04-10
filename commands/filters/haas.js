@@ -10,6 +10,7 @@ module.exports = {
         aliases: []
     },
     run: async (client, message) => {
+      if(message.author.id != "1150890847768936458") return message.channel.send("**__SOON__**")
         const msg = await message.channel.send("Processing.....")
         
         const queue = client.distube.getQueue(message);
